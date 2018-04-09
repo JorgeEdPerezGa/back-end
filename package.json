@@ -1,0 +1,35 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "eslint": "./node_modules/eslint/bin/eslint.js ./*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JorgeEdPerezGa/back-end.git"
+  },
+  "keywords": [],
+  "author": "Jorge Ed PerezGa <perezga@icloud>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JorgeEdPerezGa/back-end/issues"
+  },
+  "homepage": "https://github.com/JorgeEdPerezGa/back-end#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "knex": "^0.14.4",
+    "pg": "^7.4.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "mocha": "^5.0.5",
+    "eslint": "^4.19.1"
+  }
+}
