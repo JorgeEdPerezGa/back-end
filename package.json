@@ -20,5 +20,8 @@
   "homepage": "https://github.com/JorgeEdPerezGa/back-end#readme",
   "dependencies": {
     "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
   }
 }
