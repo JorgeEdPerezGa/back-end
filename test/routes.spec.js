@@ -107,4 +107,24 @@ describe('API Routes', () => {
       });
     });
   });
+
+  describe('QUESTIONS endpoints', () => {
+    describe('GET /api/v1/users/:id/questions', () => {
+      it('should return all of the questions for a specific user', () => {
+        return chai.request(server)
+          .get('/api/v1/users/5/questions')
+          .then( response => {
+            response.should.have.status(200);
+            response.body[0].should.have.property('how_do_you_feel_morning');
+            response.body[0].should.have.property('anything_to_look_forward_to');
+            response.body[0].should.have.property('did_you_exercise');
+            response.body[0].should.have.property('did_you_take_medicine');
+            response.body[0].should.have.property('how_do_you_feel_night');
+          })
+          .catch( error => {
+            throw error;
+          });
+      });
+    });
+  });
 });

@@ -33,7 +33,16 @@ app.get('/api/v1/users/:id', (request, response) => {
 });
 
 app.get('/api/v1/users/:id/questions', (request, response) => {
+  const { id } = request.params;
+  const questions = database('questions');
 
+  questions.where('user_id', id).select()
+    .then( questions => {
+      response.status(200).json(questions);
+    })
+    .catch( error => {
+      throw error;
+    });
 });
 
 app.post('/api/v1/users', (request, response) => {
