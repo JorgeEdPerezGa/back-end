@@ -23,6 +23,7 @@ exports.seed = function(knex, Promise) {
                 did_you_exercise: 'false',
                 did_you_take_medicine: 'true',
                 how_do_you_feel_night: 'great',
+                date: '04/01/2018',
                 user_id: user[0] 
               }
             ]);
