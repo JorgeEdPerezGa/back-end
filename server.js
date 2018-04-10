@@ -24,7 +24,24 @@ app.get('/api/v1/users/:id/questions', (request, response) => {
 });
 
 app.post('/api/v1/users', (request, response) => {
+  const userInfo = request.body;
 
+  for (let requiredParameter of ['user_email', 'username', 'password', 'push_notifications_on', 'notification_time', 'primary_contact_name', 'primary_contact_email']) {
+    if (!userInfo[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `You're missing a "${requiredParameter}" property.` });
+    }
+  }
+
+  database('users').insert(userInfo, 'id')
+    .then(user => {
+      const { user_email, username, password, push_notifications_on, notification_time, primary_contact_name, primary_contact_email } = userInfo;
+      response.status(201).json({ id: user[0], user_email, username, password, push_notifications_on, notification_time, primary_contact_name, primary_contact_email });
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
 });
 
 app.post('/api/v1/users/:id/questions', (request, response) => {
