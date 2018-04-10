@@ -19,6 +19,10 @@ app.get('/api/v1/users', (request, response) => {
     });
 });
 
+app.get('/api/v1/users/:id', (request, response) => {
+
+});
+
 app.get('/api/v1/users/:id/questions', (request, response) => {
 
 });
