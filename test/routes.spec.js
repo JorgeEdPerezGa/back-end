@@ -44,11 +44,47 @@ describe('API Routes', () => {
             response.body[0].should.have.property('primary_contact_email');
             response.body.length.should.equal(1);
           })
-          .catch( err => {
-            throw err;
+          .catch( error => {
+            throw error;
+          });
+      });
+    });
+
+    describe('POST /api/v1/users', () => {
+      it('should add a new user when gived the correct data', () => {
+        return chai.request(server)
+          .post('/api/v1/users')
+          .send({
+            user_email: 'myemail@gmail.com',
+            username: 'nyssak',
+            password: 'nyssak',
+            push_notifications_on: true,
+            notification_time: '9:00am',
+            primary_contact_name: 'Jorge',
+            primary_contact_email: 'moana@ofMotenewi.com'
+          })
+          .then(response => {
+            response.should.have.status(201);
+            response.body.should.be.a('object');
+            response.body.should.have.property('user_email');
+            response.body.user_email.should.equal('myemail@gmail.com');
+            response.body.should.have.property('username');
+            response.body.username.should.equal('nyssak');
+            response.body.should.have.property('password');
+            response.body.password.should.equal('nyssak');
+            response.body.should.have.property('push_notifications_on');
+            response.body.push_notifications_on.should.equal(true);
+            response.body.should.have.property('notification_time');
+            response.body.notification_time.should.equal('9:00am');
+            response.body.should.have.property('primary_contact_name');
+            response.body.primary_contact_name.should.equal('Jorge');
+            response.body.should.have.property('primary_contact_email');
+            response.body.primary_contact_email.should.equal('moana@ofMotenewi.com');
+          })
+          .catch( error => {
+            throw error;
           });
       });
     });
   });
-
 });
