@@ -67,7 +67,26 @@ app.post('/api/v1/users', (request, response) => {
 });
 
 app.post('/api/v1/users/:id/questions', (request, response) => {
+  const user_id = request.params.id;
+  const questionsInfo = request.body;
+  const questions = database('questions');
 
+  for (let requiredParameter of ['how_do_you_feel_morning', 'anything_to_look_forward_to', 'did_you_exercise', 'did_you_take_medicine', 'how_do_you_feel_night', 'date']) {
+    if (!questionsInfo[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `You're missing a "${requiredParameter}" property.` });
+    }
+  }
+
+  questions.insert(questionsInfo, 'id', user_id)
+    .then(question => {
+      const { how_do_you_feel_morning, anything_to_look_forward_to, did_you_exercise, did_you_take_medicine, how_do_you_feel_night, date  } = questionsInfo;
+      response.status(201).json({ id: question[0], user_id, how_do_you_feel_morning, anything_to_look_forward_to, did_you_exercise, did_you_take_medicine, how_do_you_feel_night, date });
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
 });
 
 app.patch('/api/v1/users', (request, response) => {

@@ -71,7 +71,7 @@ describe('API Routes', () => {
     });
 
     describe('POST /api/v1/users', () => {
-      it.skip('should add a new user when gived the correct data', () => {
+      it.skip('should add a new user when given the correct data', () => {
         return chai.request(server)
           .post('/api/v1/users')
           .send({
@@ -120,6 +120,30 @@ describe('API Routes', () => {
             response.body[0].should.have.property('did_you_exercise');
             response.body[0].should.have.property('did_you_take_medicine');
             response.body[0].should.have.property('how_do_you_feel_night');
+            response.body[0].should.have.property('date');
+          })
+          .catch( error => {
+            throw error;
+          });
+      });
+    });
+
+    describe('POST /api/v1/users/:id/questions', () => {
+      it.skip('should add new question data when given the correct data', () => {
+        return chai.request(server)
+          .post('/api/v1/users/5/questions')
+          .send({
+            how_do_you_feel_morning: 'good',
+            anything_to_look_forward_to: 'yes',
+            did_you_exercise: 'yes',
+            did_you_take_medicine: 'yes',
+            how_do_you_feel_night: 'good',
+            date: '04/02/2018'
+          })
+          .then(response => {
+            console.log(response.body)
+            response.should.have.status(201);
+            response.body.should.be.a('object');
           })
           .catch( error => {
             throw error;
