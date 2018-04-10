@@ -20,7 +20,16 @@ app.get('/api/v1/users', (request, response) => {
 });
 
 app.get('/api/v1/users/:id', (request, response) => {
+  const { id } = request.params;
+  const users = database('users');
 
+  users.where('id', id)
+    .then( users => {
+      response.status(200).json(users);
+    })
+    .catch(() => {
+      response.status(404);
+    });
 });
 
 app.get('/api/v1/users/:id/questions', (request, response) => {

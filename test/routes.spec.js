@@ -52,7 +52,7 @@ describe('API Routes', () => {
     describe('GET /api/v1/users/:id', () =>{
       it('return a specific user', () => {
         return chai.request(server)
-          .get('/api/v1/users/1')
+          .get('/api/v1/users/5')
           .then( response => {
             response.should.have.status(200);
             response.should.be.json;
