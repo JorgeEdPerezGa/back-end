@@ -5,6 +5,9 @@ module.exports = {
     migrations: {
       directory: './db/migrations'
     },
+    seeds: {
+      directory: './db/seeds/dev'
+    },
     useNullAsDefault: true
   },
   test: {
@@ -12,6 +15,9 @@ module.exports = {
     connection: 'postgres://localhost/mood_ring_test',
     migrations: {
       directory: './db/migrations'
+    },
+    seeds: {
+      directory: './db/seeds/test'
     },
     useNullAsDefault: true
   }
