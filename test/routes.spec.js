@@ -36,12 +36,7 @@ describe('API Routes', () => {
             response.should.have.status(200);
             response.should.be.json;
             response.body.should.be.a('array');
-            response.body[0].should.have.property('user_email');
-            response.body[0].should.have.property('username');
-            response.body[0].should.have.property('push_notifications_on');
-            response.body[0].should.have.property('notification_time');
-            response.body[0].should.have.property('primary_contact_name');
-            response.body[0].should.have.property('primary_contact_email');
+            response.body[0].should.have.property('token_string');
           })
           .catch( error => {
             throw error;
