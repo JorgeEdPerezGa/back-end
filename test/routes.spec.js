@@ -45,7 +45,7 @@ describe('API Routes', () => {
     });
 
     describe('GET /api/v1/users/:id', () =>{
-      it.only('return a specific user', () => {
+      it('return a specific user', () => {
         return chai.request(server)
           .get('/api/v1/users/5')
           .then( response => {
@@ -61,35 +61,16 @@ describe('API Routes', () => {
     });
 
     describe('POST /api/v1/users', () => {
-      it.skip('should add a new user when given the correct data', () => {
+      it.only('should add a new user when given the correct data', () => {
         return chai.request(server)
           .post('/api/v1/users')
           .send({
-            user_email: 'myemail@gmail.com',
-            username: 'nyssak',
-            password: 'nyssak',
-            push_notifications_on: true,
-            notification_time: '9:00am',
-            primary_contact_name: 'Jorge',
-            primary_contact_email: 'moana@ofMotenewi.com'
+            token_string: '8hfrn2334'
           })
           .then(response => {
             response.should.have.status(201);
             response.body.should.be.a('object');
-            response.body.should.have.property('user_email');
-            response.body.user_email.should.equal('myemail@gmail.com');
-            response.body.should.have.property('username');
-            response.body.username.should.equal('nyssak');
-            response.body.should.have.property('password');
-            response.body.password.should.equal('nyssak');
-            response.body.should.have.property('push_notifications_on');
-            response.body.push_notifications_on.should.equal(true);
-            response.body.should.have.property('notification_time');
-            response.body.notification_time.should.equal('9:00am');
-            response.body.should.have.property('primary_contact_name');
-            response.body.primary_contact_name.should.equal('Jorge');
-            response.body.should.have.property('primary_contact_email');
-            response.body.primary_contact_email.should.equal('moana@ofMotenewi.com');
+            response.body.should.have.property('token_string');
           })
           .catch( error => {
             throw error;
