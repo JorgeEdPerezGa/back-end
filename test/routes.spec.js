@@ -141,7 +141,6 @@ describe('API Routes', () => {
             date: '04/02/2018'
           })
           .then(response => {
-            console.log(response.body)
             response.should.have.status(201);
             response.body.should.be.a('object');
           })
