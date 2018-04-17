@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/mood_ring',
+    connection: 'postgres://localhost/hyperglow',
     migrations: {
       directory: './db/migrations'
     },
@@ -12,7 +12,7 @@ module.exports = {
   },
   test: {
     client: 'pg',
-    connection: 'postgres://localhost/mood_ring_test',
+    connection: 'postgres://localhost/hyperglow',
     migrations: {
       directory: './db/migrations'
     },
