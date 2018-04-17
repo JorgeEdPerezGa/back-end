@@ -12,7 +12,7 @@ module.exports = {
   },
   test: {
     client: 'pg',
-    connection: 'postgres://localhost/hyperglow',
+    connection: 'postgres://localhost/hyperglow_test',
     migrations: {
       directory: './db/migrations'
     },
