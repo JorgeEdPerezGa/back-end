@@ -32,13 +32,13 @@ app.get('/api/v1/users/:id', (request, response) => {
     });
 });
 
-app.get('/api/v1/users/:id/questions', (request, response) => {
+app.get('/api/v1/users/:id/daily_totals', (request, response) => {
   const { id } = request.params;
-  const questions = database('questions');
+  const questions = database('daily_totals');
 
   questions.where('user_id', id).select()
-    .then( questions => {
-      response.status(200).json(questions);
+    .then( totals => {
+      response.status(200).json(totals);
     })
     .catch( error => {
       throw error;
@@ -48,7 +48,7 @@ app.get('/api/v1/users/:id/questions', (request, response) => {
 app.post('/api/v1/users', (request, response) => {
   const userInfo = request.body;
 
-  for (let requiredParameter of ['user_email', 'username', 'password', 'push_notifications_on', 'notification_time', 'primary_contact_name', 'primary_contact_email']) {
+  for (let requiredParameter of ['token_string']) {
     if (!userInfo[requiredParameter]) {
       return response
         .status(422)
@@ -58,39 +58,34 @@ app.post('/api/v1/users', (request, response) => {
 
   database('users').insert(userInfo, 'id')
     .then(user => {
-      const { user_email, username, password, push_notifications_on, notification_time, primary_contact_name, primary_contact_email } = userInfo;
-      response.status(201).json({ id: user[0], user_email, username, password, push_notifications_on, notification_time, primary_contact_name, primary_contact_email });
+      const { token_string } = userInfo;
+      response.status(201).json({ id: user[0], token_string });
     })
     .catch(error => {
       response.status(500).json({ error });
     });
 });
 
-app.post('/api/v1/users/:id/questions', (request, response) => {
+app.post('/api/v1/users/:id/daily_totals', (request, response) => {
   const user_id = request.params.id;
-  const questionsInfo = request.body;
-  const questions = database('questions');
+  const dailyTotalsInfo = request.body;
 
-  for (let requiredParameter of ['how_do_you_feel_morning', 'anything_to_look_forward_to', 'did_you_exercise', 'did_you_take_medicine', 'how_do_you_feel_night', 'date']) {
-    if (!questionsInfo[requiredParameter]) {
+  for (let requiredParameter of ['current_date', 'week_start_date', 'daily_total']) {
+    if (!dailyTotalsInfo[requiredParameter]) {
       return response
         .status(422)
         .send({ error: `You're missing a "${requiredParameter}" property.` });
     }
   }
 
-  questions.insert(questionsInfo, 'id', user_id)
-    .then(question => {
-      const { how_do_you_feel_morning, anything_to_look_forward_to, did_you_exercise, did_you_take_medicine, how_do_you_feel_night, date  } = questionsInfo;
-      response.status(201).json({ id: question[0], user_id, how_do_you_feel_morning, anything_to_look_forward_to, did_you_exercise, did_you_take_medicine, how_do_you_feel_night, date });
+  database('daily_totals').insert(dailyTotalsInfo, 'id', user_id)
+    .then( question => {
+      const { current_date, week_start_date, daily_total  } = dailyTotalsInfo;
+      response.status(201).json({ id: question[0], user_id, current_date, week_start_date, daily_total });
     })
     .catch(error => {
-      response.status(500).json({ error });
+      response.status(404).json({ error });
     });
-});
-
-app.patch('/api/v1/users', (request, response) => {
-
 });
 
 app.listen(app.get('port'), () => {
