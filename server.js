@@ -66,10 +66,9 @@ app.post('/api/v1/users', (request, response) => {
     });
 });
 
-app.post('/api/v1/users/:id/daily_questions', (request, response) => {
+app.post('/api/v1/users/:id/daily_totals', (request, response) => {
   const user_id = request.params.id;
   const dailyTotalsInfo = request.body;
-  const dailyTotals = database('daily_totals');
 
   for (let requiredParameter of ['current_date', 'week_start_date', 'daily_total']) {
     if (!dailyTotalsInfo[requiredParameter]) {
@@ -79,7 +78,7 @@ app.post('/api/v1/users/:id/daily_questions', (request, response) => {
     }
   }
 
-  dailyTotals.insert(dailyTotalsInfo, 'id', user_id)
+  database('daily_totals').insert(dailyTotalsInfo, 'id', user_id)
     .then( question => {
       const { current_date, week_start_date, daily_total  } = dailyTotalsInfo;
       response.status(201).json({ id: question[0], user_id, current_date, week_start_date, daily_total });
@@ -87,10 +86,6 @@ app.post('/api/v1/users/:id/daily_questions', (request, response) => {
     .catch(error => {
       response.status(404).json({ error });
     });
-});
-
-app.patch('/api/v1/users', (request, response) => {
-
 });
 
 app.listen(app.get('port'), () => {
