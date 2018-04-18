@@ -42,6 +42,17 @@ describe('API Routes', () => {
             throw error;
           });
       });
+
+      it('returns a 404 status if endpoint does not exist', () => {
+        return chai.request(server)
+          .get('/api/v1/fake')
+          .then(response => {
+            response.should.have.status(404);
+          })
+          .catch(error => {
+            throw error;
+          });
+      });
     });
 
     describe('GET /api/v1/users/:id', () =>{
@@ -55,6 +66,17 @@ describe('API Routes', () => {
             response.body.length.should.equal(1);
           })
           .catch( error => {
+            throw error;
+          });
+      });
+
+      it('returns a 404 status if endpoint does not exist', () => {
+        return chai.request(server)
+          .get('/api/v1/fake')
+          .then(response => {
+            response.should.have.status(404);
+          })
+          .catch(error => {
             throw error;
           });
       });
@@ -79,6 +101,20 @@ describe('API Routes', () => {
     });
   });
 
+  it('should return status 404 if missing parameter in body', () => {
+    return chai.request(server)
+      .post('/api/v1/users')
+      .send({
+        appName:'app'
+      })
+      .then(response => {
+        response.should.have.status(422);
+      })
+      .catch(error => {
+        throw error;
+      });
+  });
+
   describe('QUESTIONS endpoints', () => {
     describe('GET /api/v1/users/:id/daily_totals', () => {
       it('should return all of the questions for a specific user', () => {
@@ -91,6 +127,17 @@ describe('API Routes', () => {
             response.body[0].should.have.property('daily_total');
           })
           .catch( error => {
+            throw error;
+          });
+      });
+
+      it('returns a 404 status if endpoint does not exist', () => {
+        return chai.request(server)
+          .get('/api/v1/fake')
+          .then(response => {
+            response.should.have.status(404);
+          })
+          .catch(error => {
             throw error;
           });
       });
@@ -110,6 +157,20 @@ describe('API Routes', () => {
             response.body.should.be.a('object');
           })
           .catch( error => {
+            throw error;
+          });
+      });
+
+      it('should return status 404 if missing parameter in body', () => {
+        return chai.request(server)
+          .post('/api/v1/users')
+          .send({
+            appName:'app'
+          })
+          .then(response => {
+            response.should.have.status(422);
+          })
+          .catch(error => {
             throw error;
           });
       });
