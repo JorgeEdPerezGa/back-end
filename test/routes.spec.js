@@ -97,7 +97,7 @@ describe('API Routes', () => {
     });
 
     describe('POST /api/v1/users/:id/daily_totals', () => {
-      it.only('should add new question data when given the correct data', () => {
+      it('should add new question data when given the correct data', () => {
         return chai.request(server)
           .post('/api/v1/users/5/daily_totals')
           .send({
