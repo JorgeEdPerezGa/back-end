@@ -80,12 +80,12 @@ app.post('/api/v1/users/:id/daily_questions', (request, response) => {
   }
 
   dailyTotals.insert(dailyTotalsInfo, 'id', user_id)
-    .then(question => {
+    .then( question => {
       const { current_date, week_start_date, daily_total  } = dailyTotalsInfo;
       response.status(201).json({ id: question[0], user_id, current_date, week_start_date, daily_total });
     })
     .catch(error => {
-      response.status(500).json({ error });
+      response.status(404).json({ error });
     });
 });
 

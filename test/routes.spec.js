@@ -81,7 +81,7 @@ describe('API Routes', () => {
 
   describe('QUESTIONS endpoints', () => {
     describe('GET /api/v1/users/:id/daily_totals', () => {
-      it.only('should return all of the questions for a specific user', () => {
+      it('should return all of the questions for a specific user', () => {
         return chai.request(server)
           .get('/api/v1/users/5/daily_totals')
           .then( response => {
@@ -96,17 +96,14 @@ describe('API Routes', () => {
       });
     });
 
-    describe('POST /api/v1/users/:id/questions', () => {
-      it.skip('should add new question data when given the correct data', () => {
+    describe('POST /api/v1/users/:id/daily_totals', () => {
+      it.only('should add new question data when given the correct data', () => {
         return chai.request(server)
-          .post('/api/v1/users/5/questions')
+          .post('/api/v1/users/5/daily_totals')
           .send({
-            how_do_you_feel_morning: 'good',
-            anything_to_look_forward_to: 'yes',
-            did_you_exercise: 'yes',
-            did_you_take_medicine: 'yes',
-            how_do_you_feel_night: 'good',
-            date: '04/02/2018'
+            current_date: 'Sat Apr 21 2018 14:22:06 GMT-0600',
+            week_start_date: 'Tue Apr 17 2018 14:22:06 GMT-0600',
+            daily_total: 3
           })
           .then(response => {
             response.should.have.status(201);
