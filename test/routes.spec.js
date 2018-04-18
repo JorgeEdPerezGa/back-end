@@ -47,7 +47,7 @@ describe('API Routes', () => {
     describe('GET /api/v1/users/:id', () =>{
       it('return a specific user', () => {
         return chai.request(server)
-          .get('/api/v1/users/5')
+          .get('/api/v1/users/1')
           .then( response => {
             response.should.have.status(200);
             response.should.be.json;
@@ -83,7 +83,7 @@ describe('API Routes', () => {
     describe('GET /api/v1/users/:id/daily_totals', () => {
       it('should return all of the questions for a specific user', () => {
         return chai.request(server)
-          .get('/api/v1/users/5/daily_totals')
+          .get('/api/v1/users/1/daily_totals')
           .then( response => {
             response.should.have.status(200);
             response.body[0].should.have.property('current_date');
@@ -99,7 +99,7 @@ describe('API Routes', () => {
     describe('POST /api/v1/users/:id/daily_totals', () => {
       it('should add new question data when given the correct data', () => {
         return chai.request(server)
-          .post('/api/v1/users/5/daily_totals')
+          .post('/api/v1/users/1/daily_totals')
           .send({
             current_date: 'Sat Apr 21 2018 14:22:06 GMT-0600',
             week_start_date: 'Tue Apr 17 2018 14:22:06 GMT-0600',
